@@ -1,14 +1,95 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import {
+  Image,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView,
+} from "react-native";
+import React, { useEffect, useState } from "react";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { ApiCallBodyPart } from "../Api/exerciseDB";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import Icon from "react-native-vector-icons/MaterialIcons"; // Importing MaterialIcons
+import ExercisesList from "../components/ExercisesList";
 
-const exersice = () => {
+const Exercises = () => {
+  const item = useLocalSearchParams();
+  const router = useRouter();
+
+  const [exercies ,setExercies]= useState([])
+
+  useEffect(() => {
+    if (item) getBodyPartExercises(item.name);
+  }, [item]);
+
+  const getBodyPartExercises = async (bodyPart) => {
+    const data = await ApiCallBodyPart(bodyPart);
+    console.log("got the data ", data);
+    setExercies(data)
+  };
+
   return (
-    <View>
-      <Text>exersice</Text>
-    </View>
-  )
-}
+    <ScrollView>
+      <StatusBar style="light" />
+      <View style={styles.imageContainer}>
+        <Image
+          source={item.image} // Assuming item.image is a URL
+          style={styles.image}
+        />
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.back()}
+        >
+          <Icon name="arrow-back" size={24} color="white" />
+        </TouchableOpacity>
 
-export default exersice
+        {/* exercies */}
 
-const styles = StyleSheet.create({})
+        <View style={styles.exer}>
+          <Text style={styles.exerName}>{item.name} Exercises</Text>
+
+            <View>
+                  <ExercisesList data={exercies} />
+            </View>
+
+        </View>
+      </View>
+    </ScrollView>
+  );
+};
+
+export default Exercises;
+
+const styles = StyleSheet.create({
+  imageContainer: {
+    position: "relative",
+  },
+  image: {
+    width: wp(100),
+    height: hp(45),
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 50,
+  },
+  backButton: {
+    position: "absolute",
+    top: 40,
+    left: 20,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    borderRadius: 50,
+    padding: 10,
+    backgroundColor: "red",
+  },
+  exer:{
+    marginTop:hp(2),
+    marginLeft:hp(2)
+  },
+  exerName:{
+    fontSize:hp(3),
+    fontWeight:"bold"
+  }
+});

@@ -6,6 +6,9 @@
 //     require("../assets/images/slide5.png"),
 // ]
 
+
+export const ApiKey ="cffca5683cmshde4ec8943bb0f09p14ba9bjsn004df59ac7b5"
+
 export const bodyPart = [
   { name: "back", image: require("../assets/images/back.png") },
   { name: "cardio", image: require("../assets/images/cardio.png") },

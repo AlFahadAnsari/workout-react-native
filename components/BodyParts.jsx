@@ -36,11 +36,11 @@ export default function BodyParts() {
   );
 }
 
-const BodyPartCard = ({ item, router }) => {
+const BodyPartCard = ({ item, router, index }) => {
   return (
     <TouchableOpacity
       style={styles.card}
-      onPress={()=>router.push({pathname:"/exersice" , param:item })}
+      onPress={() => router.push({ pathname: "/exersice", params: item })}
     >
       <Image source={item.image} style={styles.image} resizeMode="cover" />
       <LinearGradient
