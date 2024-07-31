@@ -16,21 +16,24 @@ import {
 } from "react-native-responsive-screen";
 import Icon from "react-native-vector-icons/MaterialIcons"; // Importing MaterialIcons
 import ExercisesList from "../components/ExercisesList";
+import { demoExercises } from "../constants/SliderImages";
 
 const Exercises = () => {
   const item = useLocalSearchParams();
   const router = useRouter();
 
-  const [exercies ,setExercies]= useState([])
+  const [exercises, setExercises] = useState(demoExercises);
 
   useEffect(() => {
-    if (item) getBodyPartExercises(item.name);
+    // if (item && item.name) {
+    //   getBodyPartExercises(item.name);
+    // }
   }, [item]);
 
   const getBodyPartExercises = async (bodyPart) => {
     const data = await ApiCallBodyPart(bodyPart);
-    console.log("got the data ", data);
-    setExercies(data)
+    // console.log("got the data", data);
+    setExercises(data);
   };
 
   return (
@@ -48,15 +51,16 @@ const Exercises = () => {
           <Icon name="arrow-back" size={24} color="white" />
         </TouchableOpacity>
 
-        {/* exercies */}
-
         <View style={styles.exer}>
           <Text style={styles.exerName}>{item.name} Exercises</Text>
 
-            <View>
-                  <ExercisesList data={exercies} />
-            </View>
-
+          <View>
+            {exercises.length > 0 ? (
+              <ExercisesList data={exercises} />
+            ) : (
+              <Text style={styles.noDataText}>No exercises found.</Text>
+            )}
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -84,12 +88,18 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "red",
   },
-  exer:{
-    marginTop:hp(2),
-    marginLeft:hp(2)
+  exer: {
+    marginTop: hp(2),
+    marginLeft: hp(2),
   },
-  exerName:{
-    fontSize:hp(3),
-    fontWeight:"bold"
-  }
+  exerName: {
+    fontSize: hp(3),
+    fontWeight: "bold",
+  },
+  noDataText: {
+    textAlign: "center",
+    marginTop: hp(2),
+    color: "gray",
+    fontSize: hp(2),
+  },
 });
