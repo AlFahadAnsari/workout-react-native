@@ -8,8 +8,9 @@ const _layout = () => {
         screenOptions={{
             headerShown:false
         }}
-    />
-  )
-}
+        />
+      )
+    }
+    <Stack.Screen name='details' options={{animation:"slide_from_bottom"}}/>
 
 export default _layout

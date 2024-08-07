@@ -22,7 +22,7 @@ const apiCall = async (url, params) => {
     const response = await axios.request(options);
     return response.data; // Return the data from the response
   } catch (error) {
-    console.log("error is", error);
+    // console.log("error is", error);
     return null;
   }
 };

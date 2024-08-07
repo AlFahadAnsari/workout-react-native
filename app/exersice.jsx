@@ -23,7 +23,7 @@ const Exercises = () => {
   const router = useRouter();
 
   const [exercises, setExercises] = useState(demoExercises);
-
+console.log(exercises)
   useEffect(() => {
     // if (item && item.name) {
     //   getBodyPartExercises(item.name);
@@ -54,13 +54,9 @@ const Exercises = () => {
         <View style={styles.exer}>
           <Text style={styles.exerName}>{item.name} Exercises</Text>
 
-          <View>
-            {exercises.length > 0 ? (
-              <ExercisesList data={exercises} />
-            ) : (
-              <Text style={styles.noDataText}>No exercises found.</Text>
-            )}
-          </View>
+        <View style={{marginBottom:10}}>
+        <ExercisesList data={exercises}/>
+        </View>
         </View>
       </View>
     </ScrollView>
